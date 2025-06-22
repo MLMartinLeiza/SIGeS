@@ -1,0 +1,17 @@
+# Carpetas de compilación
+/build/
+nbproject/private/
+dist/
+
+# Archivos de clase compilados
+*.class
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de log o caché
+*.log
+
+# Archivos personales o de entorno
+*.iml
