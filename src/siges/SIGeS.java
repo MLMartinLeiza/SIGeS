@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 
 public class SIGeS {
-
+    
     ArrayList<Cliente> clientes = new ArrayList<>();
     ArrayList<Servicio> servicios = new ArrayList<>();
     ArrayList<Registro> registros = new ArrayList<>();
@@ -16,9 +16,16 @@ public class SIGeS {
         String nombre = sc.nextLine();
         System.out.println("Ingrese el DNI");
         String dni = sc.nextLine();
-        Cliente cliente = new Cliente(nombre, dni);
-        clientes.add(cliente);
-        System.out.println("Cliente agregado correctamente!");
+        
+        Cliente c = buscarClientePorDni(dni);
+        if (c != null) {
+            System.out.println("Ya existe un cliente con ese DNI");
+            return;
+        } else {
+            Cliente cliente = new Cliente(nombre, dni);
+            clientes.add(cliente);
+            System.out.println("Cliente agregado correctamente!");
+        }
     }
 
     //Metodo Agregar Servicio
@@ -42,7 +49,7 @@ public class SIGeS {
             System.out.println("No se encontró el cliente");
             return;
         }
-
+        
         System.out.println("Ingrese la descripción del servicio:");
         String descripcion = sc.nextLine();
         Servicio servicio = buscarServicioPorDescripcion(descripcion);
@@ -50,14 +57,14 @@ public class SIGeS {
             System.out.println("No hay servicios con esa descripción");
             return;
         }
-
+        
         LocalDate fecha = LocalDate.now();
         Registro registro = new Registro(cliente, servicio, fecha);
         registros.add(registro);
         System.out.println("Atención registrada correctamente");
-
+        
     }
-
+    
     public Cliente buscarClientePorDni(String dni) {
         for (Cliente c : clientes) {
             if (c.getDni().equalsIgnoreCase(dni)) {
@@ -66,7 +73,7 @@ public class SIGeS {
         }
         return null;
     }
-
+    
     public Servicio buscarServicioPorDescripcion(String descripcion) {
         for (Servicio s : servicios) {
             if (s.getDescripcion().toLowerCase().contains(descripcion.toLowerCase())) {
@@ -75,7 +82,7 @@ public class SIGeS {
         }
         return null;
     }
-
+    
     public void verHistorialPorCliente(Scanner sc) {
         boolean encontrados = false;
         System.out.println("Ingrese el DNI del cliente:");
@@ -85,13 +92,13 @@ public class SIGeS {
                 encontrados = true;
                 System.out.println("Atención: " + r);
             }
-
+            
         }
         if (!encontrados) {
             System.out.println("No hay atenciones registradas para este cliente");
         }
     }
-
+    
     public void listarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("No hay clientes registrados");
@@ -100,9 +107,9 @@ public class SIGeS {
         for (Cliente c : clientes) {
             System.out.println(c);
         }
-
+        
     }
-
+    
     public void listarServicios() {
         if (servicios.isEmpty()) {
             System.out.println("No hay servicios registrados");
@@ -111,9 +118,9 @@ public class SIGeS {
         for (Servicio s : servicios) {
             System.out.println(s);
         }
-
+        
     }
-
+    
     public void buscarServPorPalabra(Scanner sc) {
         boolean servicioEncontrado = false;
         System.out.println("Ingrese una palabra para buscar servicio:");
@@ -123,13 +130,13 @@ public class SIGeS {
                 servicioEncontrado = true;
                 System.out.println(s);
             }
-
+            
         }
         if (!servicioEncontrado) {
             System.out.println("No se encontraron servicios");
         }
     }
-
+    
     public static void main(String[] args) {
         SIGeS siges = new SIGeS();
         Scanner sc = new Scanner(System.in);
@@ -177,9 +184,9 @@ public class SIGeS {
                 default:
                     System.out.println("Opción inexistente");
             }
-
+            
         } while (opcion != 0);
-
+        
     }
-
+    
 }
