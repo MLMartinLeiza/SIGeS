@@ -155,6 +155,22 @@ public class SIGeS {
 
     }
 
+    public void filtrarPorCostoMaximo(Scanner sc) {
+        boolean encontrado = false;
+        System.out.println("Ingrese el costo del servicio");
+        double costo = sc.nextDouble();
+        sc.nextLine();
+        for (Servicio s : servicios) {
+            if (s.getCosto() <= costo) {
+                encontrado = true;
+                System.out.println(s);
+            }
+        }
+        if (!encontrado) {
+            System.out.println("No se encontró costo menor");
+        }
+    }
+
     public static void main(String[] args) {
         SIGeS siges = new SIGeS();
         Scanner sc = new Scanner(System.in);
@@ -171,6 +187,7 @@ public class SIGeS {
                     + "\n 6. Listar Servicios"
                     + "\n 7. Buscar Servicios"
                     + "\n 8. Eliminar Cliente"
+                    + "\n 9. Filtrar por costo máximo"
                     + "\n 0. Salir"
                     + "\n Seleccione una opción: ");
             opcion = sc.nextInt();
@@ -199,6 +216,9 @@ public class SIGeS {
                     break;
                 case 8:
                     siges.eliminarCliente(sc);
+                    break;
+                case 9:
+                    siges.filtrarPorCostoMaximo(sc);
                     break;
                 case 0:
                     System.out.println("Saliendo, que tenga buen dia...");
