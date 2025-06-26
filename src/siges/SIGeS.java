@@ -16,6 +16,8 @@ public class SIGeS {
         String nombre = sc.nextLine();
         System.out.println("Ingrese el DNI");
         String dni = sc.nextLine();
+        // Mejora 1 - SIGeS
+        // Verifica si ya existe un cliente con el mismo DNI antes de agregar uno nuevo
 
         Cliente c = buscarClientePorDni(dni);
         if (c != null) {
@@ -137,6 +139,8 @@ public class SIGeS {
         }
     }
 
+    // Mejora 2 
+    // Método para eliminar un cliente por DNI desde la lista de clientes
     public void eliminarCliente(Scanner sc) {
         Cliente clienteAEliminar = null;
         System.out.println("Ingrese el DNI para eliminar:");
@@ -155,6 +159,8 @@ public class SIGeS {
 
     }
 
+    // Mejora 3
+    // Método para mostrar los servicios cuyo costo sea menor o igual al valor ingresado por el usuario
     public void filtrarPorCostoMaximo(Scanner sc) {
         boolean encontrado = false;
         System.out.println("Ingrese el costo del servicio");
@@ -169,6 +175,32 @@ public class SIGeS {
         if (!encontrado) {
             System.out.println("No se encontró costo menor");
         }
+    }
+
+    // Mejora 4
+    // Método para calcular el total gastado por un cliente según su DNI recorriendo los registros
+    public void gastoTotalCliente(Scanner sc) {
+        boolean encontrado = false;
+        double costos = 0;
+        System.out.println("Ingrese el DNI del cliente");
+        String dni = sc.nextLine();
+        for (Cliente c : clientes) {
+            if (c.getDni().equalsIgnoreCase(dni)) {
+                encontrado = true;
+                for (Registro r : registros) {
+                    if (r.getCliente().getDni().equalsIgnoreCase(dni)) {
+                        costos = costos + r.getServicio().getCosto();
+
+                    }
+                }
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No hay cliente registrado");
+            return;
+        }
+        System.out.println("Costos acumulados: " + costos);
     }
 
     public static void main(String[] args) {
@@ -188,6 +220,7 @@ public class SIGeS {
                     + "\n 7. Buscar Servicios"
                     + "\n 8. Eliminar Cliente"
                     + "\n 9. Filtrar por costo máximo"
+                    + "\n 10. Gasto total del cliente"
                     + "\n 0. Salir"
                     + "\n Seleccione una opción: ");
             opcion = sc.nextInt();
@@ -219,6 +252,9 @@ public class SIGeS {
                     break;
                 case 9:
                     siges.filtrarPorCostoMaximo(sc);
+                    break;
+                case 10:
+                    siges.gastoTotalCliente(sc);
                     break;
                 case 0:
                     System.out.println("Saliendo, que tenga buen dia...");
